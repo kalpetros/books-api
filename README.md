@@ -58,7 +58,7 @@ $ curl -H 'Accept: application/json;' http://localhost:8000/api/books/
 
 #### GET
 
-Get details about specific book:
+Get book details:
 
 ```
 $ curl -H 'Accept: application/json;' http://localhost:8000/api/books/{id}/
