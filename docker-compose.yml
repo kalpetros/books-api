@@ -1,0 +1,18 @@
+version: "3.8"
+
+services:
+  migrate:
+    build: .
+    volumes: 
+      - .:/srv
+    command: ash -c 'python manage.py makemigrations api && python manage.py migrate'
+
+  api:
+    build: .
+    volumes:
+      - .:/srv
+    ports:
+      - "8000:8000"
+    depends_on: 
+      - migrate
+    command: python manage.py runserver 0.0.0.0:8000
