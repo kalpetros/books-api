@@ -28,13 +28,13 @@ class BookViewSet(viewsets.ModelViewSet):
     Return a list of all books having a publishing company.
 
     retrieve:
-    Return a book.
+    Returns a single book given the books’s ID.
 
     update:
-    Update a book.
+    Update a book given the book's ID.
 
     destroy:
-    Delete a book.
+    Delete a book given the book's ID.
     """
     serializer_class = BookSerializer
     list_serializer_class = BookListSerializer
@@ -43,12 +43,12 @@ class BookViewSet(viewsets.ModelViewSet):
     http_method_names = ['get', 'post', 'put', 'delete']
 
     def get_serializer_class(self):
-        if self.action == 'retrieve':
-            if hasattr(self, 'detail_serializer_class'):
-                return self.detail_serializer_class
-        elif self.action == 'list':
+        if self.action == 'list':
             if hasattr(self, 'list_serializer_class'):
                 return self.list_serializer_class
+        elif self.action == 'retrieve':
+            if hasattr(self, 'detail_serializer_class'):
+                return self.detail_serializer_class
         else:
             return super().get_serializer_class()
 

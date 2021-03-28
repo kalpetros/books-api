@@ -8,7 +8,7 @@ from api.models import Publisher
 class AuthorSerializer(serializers.ModelSerializer):
     class Meta:
         model = Author
-        exclude = ('id', )
+        fields = '__all__'
 
 
 class AuthorCustomSerializer(serializers.ModelSerializer):
@@ -22,7 +22,7 @@ class AuthorCustomSerializer(serializers.ModelSerializer):
 class PublisherSerializer(serializers.ModelSerializer):
     class Meta:
         model = Publisher
-        exclude = ('id', )
+        fields = '__all__'
 
 
 class PublisherCustomSerializer(serializers.ModelSerializer):
@@ -54,7 +54,7 @@ class BookListSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Book
-        fields = ['title', 'description', 'isbn', 'author']
+        fields = ['id', 'title', 'description', 'isbn', 'author']
 
 
 class BookDetailSerializer(serializers.ModelSerializer):
@@ -67,5 +67,11 @@ class BookDetailSerializer(serializers.ModelSerializer):
     class Meta:
         model = Book
         fields = [
-            'title', 'description', 'isbn', 'created', 'author', 'publisher'
+            'id',
+            'title',
+            'description',
+            'isbn',
+            'created',
+            'author',
+            'publisher'
         ]
