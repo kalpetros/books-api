@@ -46,7 +46,7 @@ paths:
   /api/books/{id}/:
     get:
       operationId: retrieveBook
-      description: Return a book.
+      description: "Returns a single book given the books\u2019s ID."
       parameters:
       - name: id
         in: path
@@ -65,7 +65,7 @@ paths:
       - api
     put:
       operationId: updateBook
-      description: Update a book.
+      description: Update a book given the book's ID.
       parameters:
       - name: id
         in: path
@@ -95,7 +95,7 @@ paths:
       - api
     delete:
       operationId: destroyBook
-      description: Delete a book.
+      description: Delete a book given the book's ID.
       parameters:
       - name: id
         in: path
@@ -163,6 +163,9 @@ components:
     BookList:
       type: object
       properties:
+        id:
+          type: integer
+          readOnly: true
         title:
           type: string
           maxLength: 200
@@ -182,6 +185,9 @@ components:
     BookDetail:
       type: object
       properties:
+        id:
+          type: integer
+          readOnly: true
         title:
           type: string
           maxLength: 200
@@ -230,6 +236,9 @@ components:
     Author:
       type: object
       properties:
+        id:
+          type: integer
+          readOnly: true
         first_name:
           type: string
           maxLength: 100
@@ -284,6 +293,9 @@ components:
     Publisher:
       type: object
       properties:
+        id:
+          type: integer
+          readOnly: true
         name:
           type: string
           maxLength: 250
