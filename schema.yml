@@ -1,0 +1,297 @@
+openapi: 3.0.2
+info:
+  title: ''
+  version: ''
+paths:
+  /api/books/:
+    get:
+      operationId: listBooks
+      description: Return a list of all books having a publishing company.
+      parameters: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/BookList'
+          description: ''
+      tags:
+      - api
+    post:
+      operationId: createBook
+      description: Create a new book instance.
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Book'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Book'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Book'
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Book'
+          description: ''
+      tags:
+      - api
+  /api/books/{id}/:
+    get:
+      operationId: retrieveBook
+      description: Return a book.
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: A unique integer value identifying this book.
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BookDetail'
+          description: ''
+      tags:
+      - api
+    put:
+      operationId: updateBook
+      description: Update a book.
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: A unique integer value identifying this book.
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Book'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Book'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Book'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Book'
+          description: ''
+      tags:
+      - api
+    delete:
+      operationId: destroyBook
+      description: Delete a book.
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: A unique integer value identifying this book.
+        schema:
+          type: string
+      responses:
+        '204':
+          description: ''
+      tags:
+      - api
+  /api/authors/:
+    post:
+      operationId: createAuthor
+      description: Create a new author instance.
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Author'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Author'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Author'
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Author'
+          description: ''
+      tags:
+      - api
+  /api/publishers/:
+    post:
+      operationId: createPublisher
+      description: Create a new publisher instance.
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Publisher'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Publisher'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Publisher'
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Publisher'
+          description: ''
+      tags:
+      - api
+components:
+  schemas:
+    BookList:
+      type: object
+      properties:
+        title:
+          type: string
+          maxLength: 200
+        description:
+          type: string
+        isbn:
+          type: string
+          pattern: ^([0-9]{10}|[0-9]{13})$
+          maxLength: 13
+        author:
+          type: string
+          readOnly: true
+      required:
+      - title
+      - isbn
+    BookDetail:
+      type: object
+      properties:
+        title:
+          type: string
+          maxLength: 200
+        description:
+          type: string
+        isbn:
+          type: string
+          pattern: ^([0-9]{10}|[0-9]{13})$
+          maxLength: 13
+        created:
+          type: string
+          format: date
+        author:
+          type: object
+          properties:
+            name:
+              type: string
+              readOnly: true
+            email:
+              type: string
+              format: email
+              maxLength: 254
+            dob:
+              type: string
+              format: date
+          required:
+          - email
+          - dob
+        publisher:
+          type: object
+          properties:
+            name:
+              type: string
+              maxLength: 250
+            address:
+              type: string
+              maxLength: 250
+          required:
+          - name
+      required:
+      - title
+      - isbn
+      - created
+      - author
+      - publisher
+    Author:
+      type: object
+      properties:
+        first_name:
+          type: string
+          maxLength: 100
+        last_name:
+          type: string
+          maxLength: 200
+        email:
+          type: string
+          format: email
+          maxLength: 254
+        dob:
+          type: string
+          format: date
+          nullable: true
+      required:
+      - first_name
+      - last_name
+      - email
+    Book:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        title:
+          type: string
+          maxLength: 200
+        description:
+          type: string
+        isbn:
+          type: string
+          pattern: ^([0-9]{10}|[0-9]{13})$
+          maxLength: 13
+        created:
+          type: string
+          format: date
+        visibility_status:
+          enum:
+          - AC
+          - IN
+          type: string
+        author:
+          type: integer
+        publisher:
+          type: integer
+          nullable: true
+      required:
+      - title
+      - isbn
+      - created
+      - author
+    Publisher:
+      type: object
+      properties:
+        name:
+          type: string
+          maxLength: 250
+        telephone:
+          type: string
+          pattern: ^\+?1?\d{9,15}$
+          maxLength: 17
+        address:
+          type: string
+          maxLength: 250
+      required:
+      - name
