@@ -168,6 +168,7 @@ components:
           maxLength: 200
         description:
           type: string
+          readOnly: true
         isbn:
           type: string
           pattern: ^([0-9]{10}|[0-9]{13})$
