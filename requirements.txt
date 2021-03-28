@@ -1,0 +1,5 @@
+django
+django-rest-framework
+pyyaml
+uritemplate
+yapf
