@@ -8,6 +8,8 @@ To run the books API application open a terminal and type:
 $ docker-compose up
 ```
 
+Visit http://localhost:8000/api/ to interact with the API.
+
 ## Documentation
 
 Visit http://localhost:8000 to see details about the available endpoints.
