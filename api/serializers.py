@@ -39,9 +39,18 @@ class BookSerializer(serializers.ModelSerializer):
 
 class BookListSerializer(serializers.ModelSerializer):
     author = serializers.SerializerMethodField()
+    description = serializers.SerializerMethodField()
 
     def get_author(self, obj):
         return f'{obj.author.first_name} {obj.author.last_name}'
+
+    def get_description(self, obj):
+        string = obj.description
+
+        if len(obj.description) > 100:
+            string = f'{obj.description[:100]}...'
+
+        return string
 
     class Meta:
         model = Book
